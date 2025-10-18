@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('events', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->string('caption')->nullable();
+            $table->text('description')->nullable();
+            $table->string('address')->nullable();
+            $table->dateTime('set_time');
+            $table->string('links')->nullable();
+            $table->integer('project_id')->nullable();
+            $table->integer('category_id')->nullable();
+            $table->boolean('published')->default(0);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('events');
+    }
+};
