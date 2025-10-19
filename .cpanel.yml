@@ -1,0 +1,18 @@
+---
+  deployment:
+    tasks:
+      # set project public folder or deployment folder
+      - export DEPLOYPATH=/home/domains/cyiamaef.org/public_html
+      - export REPOPATH=/home/domains/cyiamaef.org/repo
+      - export DATAPATH=/home/domains/cyiamaef.org/data
+
+      # copy contents of the public folder alongside composer.json and composer lock into public folder
+      - yes | cp $DATAPATH/.env $DEPLOYPATH
+      - cp -r $REPOPATH/public/* $DEPLOYPATH
+
+      - chmod -R 0777 $DEPLOYPATH/public
+
+      # install composer packages both in project repository and deployment root
+      - cd $DEPLOYPATH
+      - composer install
+      - php artisan optimize:clear
